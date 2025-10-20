@@ -21,10 +21,10 @@ struct OnboardingContainerView: View {
             if viewModel.step == 0{
                 StepOneOnboardView()
             }else if viewModel.step == 1{
-                StepTwoOnboardView()
+                StepTwoOnboardView(name: $viewModel.user.name, age: $viewModel.user.age)
             }
             
-            Spacer()
+            Spacer(minLength: 400)
             
             Button(action: {
                 viewModel.nextStep()
