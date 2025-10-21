@@ -31,15 +31,28 @@ final class OnboardingViewModel: ObservableObject {
             } else if user.name.count > 50 {
                 userErrors.nameError = "Name is too long"
                 isValid = false
+            } else if user.name.count < 3 {
+                userErrors.nameError = "Name is too short"
+                isValid = false
             }
             
         case 2:
-            
-            break
+            if user.gender == nil {
+                userErrors.genderError = "Please select a gender"
+                isValid = false
+            } else if user.weight < 70 || user.weight > 400 {
+                userErrors.weightError = "Please enter a valid weight"
+                isValid = false
+            }
             
         case 3:
-            
-            break
+            if user.activityLevel == nil {
+                userErrors.activityLevelError = "Please select an activity level"
+                isValid = false
+            } else if user.goal == nil {
+                userErrors.goalError = "Please select a goal"
+                isValid = false
+            }
             
         default:
             break

@@ -23,11 +23,15 @@ struct StepTwoOnboardView: View {
                 }
                 
                 VStack{
-                    Text("Enter Weight")
-                    TextField("",value: $weight, format: .number)
-                        .keyboardType(.numberPad)
-                        .padding(10)
-                        .multilineTextAlignment(.center)
+                    Text("Enter Weight(lbs)")
+                    HStack(spacing: 0){
+                        TextField("",value: $weight, format: .number)
+                            .keyboardType(.numberPad)
+                            .padding(10)
+                            .multilineTextAlignment(.center)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                    }
                 }
                 
             }

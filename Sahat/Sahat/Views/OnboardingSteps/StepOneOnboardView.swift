@@ -16,6 +16,9 @@ struct StepOneOnboardView: View {
                     Text("Enter Name:")
                     TextField("", text: $name)
                         .multilineTextAlignment(.center)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                        .padding(10)
                 }
                 
                 VStack(){
