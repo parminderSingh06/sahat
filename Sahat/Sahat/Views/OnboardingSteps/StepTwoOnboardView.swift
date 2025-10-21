@@ -12,15 +12,17 @@ struct StepTwoOnboardView: View {
             
             VStack{
                 
-                VStack(alignment: .leading){
+                VStack{
                     Text("Enter Name:")
                     TextField("", text: $name)
+                        .multilineTextAlignment(.center)
                 }
                 
-                VStack(alignment: .leading){
+                VStack(){
                     Text("Enter Age:")
                     TextField("", value: $age, format: .number)
                         .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
                 }
                 
             }
