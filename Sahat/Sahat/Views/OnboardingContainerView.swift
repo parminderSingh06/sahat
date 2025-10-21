@@ -24,6 +24,8 @@ struct OnboardingContainerView: View {
                 StepTwoOnboardView(name: $viewModel.user.name, age: $viewModel.user.age)
             }else if viewModel.step == 2{
                 StepThreeOnboardView(gender: $viewModel.user.gender, weight: $viewModel.user.weight)
+            }else if viewModel.step == 3{
+                StepFourOnboardView(activityLevel: $viewModel.user.activityLevel, goal: $viewModel.user.goal)
             }
             
             Spacer(minLength: 400)
