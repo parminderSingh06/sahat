@@ -20,9 +20,9 @@ struct StepTwoOnboardView: View {
                 
                 VStack(){
                     Text("Enter Age:")
-                    TextField("", value: $age, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
+                    Text("\(age)")
+                    Stepper("", value: $age, in: 13...100)
+                        .labelsHidden()
                 }
                 
             }
