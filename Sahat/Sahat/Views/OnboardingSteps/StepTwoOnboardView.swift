@@ -1,32 +1,36 @@
 import SwiftUI
 
 struct StepTwoOnboardView: View {
-    @Binding var name: String
-    @Binding var age: Int
+    @Binding var gender: Gender?
+    @Binding var weight: Double
     
     var body: some View {
         VStack {
-            Text("Lets Get Started. Enter Your Name and Age:")
+            Text("Enter Your Gender and Weight:")
             
             Spacer()
             
             VStack{
                 
                 VStack{
-                    Text("Enter Name:")
-                    TextField("", text: $name)
-                        .multilineTextAlignment(.center)
+                    Text("Select Gender")
+                    Picker("Gender", selection: $gender){
+                        Text("Male").tag(Gender.male)
+                        Text("Female").tag(Gender.female)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(10)
                 }
                 
-                VStack(){
-                    Text("Enter Age:")
-                    Text("\(age)")
-                    Stepper("", value: $age, in: 13...100)
-                        .labelsHidden()
+                VStack{
+                    Text("Enter Weight")
+                    TextField("",value: $weight, format: .number)
+                        .keyboardType(.numberPad)
+                        .padding(10)
+                        .multilineTextAlignment(.center)
                 }
                 
             }
         }
     }
 }
-

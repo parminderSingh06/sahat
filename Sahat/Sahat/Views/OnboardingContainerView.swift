@@ -19,13 +19,13 @@ struct OnboardingContainerView: View {
             Spacer()
             
             if viewModel.step == 0{
-                StepOneOnboardView()
+                StepZeroOnboardView()
             }else if viewModel.step == 1{
-                StepTwoOnboardView(name: $viewModel.user.name, age: $viewModel.user.age)
+                StepOneOnboardView(name: $viewModel.user.name, age: $viewModel.user.age)
             }else if viewModel.step == 2{
-                StepThreeOnboardView(gender: $viewModel.user.gender, weight: $viewModel.user.weight)
+                StepTwoOnboardView(gender: $viewModel.user.gender, weight: $viewModel.user.weight)
             }else if viewModel.step == 3{
-                StepFourOnboardView(activityLevel: $viewModel.user.activityLevel, goal: $viewModel.user.goal)
+                StepThreeOnboardView(activityLevel: $viewModel.user.activityLevel, goal: $viewModel.user.goal)
             }
             
             Spacer(minLength: 400)

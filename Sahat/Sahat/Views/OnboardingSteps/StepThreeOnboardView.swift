@@ -1,33 +1,33 @@
 import SwiftUI
 
 struct StepThreeOnboardView: View {
-    @Binding var gender: Gender?
-    @Binding var weight: Double
+    @Binding var activityLevel: ActivityLevel
+    @Binding var goal: Goal
     
     var body: some View {
         VStack {
-            Text("Enter Your Gender and Weight:")
+            Text("Enter Your Activity Level, and your goal:")
             
             Spacer()
             
             VStack{
                 
                 VStack{
-                    Text("Select Gender")
-                    Picker("Gender", selection: $gender){
-                        Text("Male").tag(Gender.male)
-                        Text("Female").tag(Gender.female)
+                    Text("What is your activity level?")
+                    Picker("Activity Level", selection:$activityLevel){
+                        ForEach(ActivityLevel.allCases){ level in
+                            Text(level.description).tag(level)
+                        }
                     }
-                    .pickerStyle(.segmented)
-                    .padding(10)
                 }
                 
                 VStack{
-                    Text("Enter Weight")
-                    TextField("",value: $weight, format: .number)
-                        .keyboardType(.numberPad)
-                        .padding(10)
-                        .multilineTextAlignment(.center)
+                    Text("What is your goal?")
+                    Picker("Goal", selection:$goal){
+                        ForEach(Goal.allCases){ goal in
+                            Text(goal.rawValue).tag(goal)
+                        }
+                    }
                 }
                 
             }
