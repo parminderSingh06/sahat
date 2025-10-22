@@ -18,6 +18,8 @@ class DatabaseManager{
         if sqlite3_open(fileUrl.path, &db) != SQLITE_OK{
             print("Error db cannot be opened")
         }
+        
+        print("Database is at: \(fileUrl.path())")
     }
     
     private func createUserTable(){
@@ -28,7 +30,7 @@ class DatabaseManager{
                 age INTEGER,
                 gender TEXT,
                 weight REAL,
-                activityLevel TEXT,
+                activityLevel INT,
                 goal TEXT
             );
             """

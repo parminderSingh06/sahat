@@ -4,6 +4,7 @@ import SwiftUI
 struct SahatApp: App {
     var body: some Scene {
         WindowGroup {
+            OnboardingContainerView()
         }
     }
 }

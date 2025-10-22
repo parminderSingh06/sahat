@@ -6,9 +6,15 @@ final class OnboardingViewModel: ObservableObject {
     @Published var user = User()
     @Published var userErrors = UserError()
     
+    private let userRepository = UserRepository()
+    
     private let maxStep = 3
     
     func nextStep() {
+        if(step == 3){
+            userRepository.insert(user: user)
+        }
+        
         guard validateCurrentStep() else { return }
         step = min(step + 1, maxStep)
         
