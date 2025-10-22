@@ -3,6 +3,8 @@ import SwiftUI
 struct StepOneOnboardView: View {
     @Binding var name: String
     @Binding var age: Int
+    @Binding var nameError: String?
+    @Binding var ageError: String?
     
     var body: some View {
         VStack {
@@ -19,6 +21,11 @@ struct StepOneOnboardView: View {
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
                         .padding(10)
+                    
+                    if let error = nameError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
+                    }
                 }
                 
                 VStack(){
@@ -26,6 +33,11 @@ struct StepOneOnboardView: View {
                     Text("\(age)")
                     Stepper("", value: $age, in: 13...100)
                         .labelsHidden()
+                    
+                    if let error = ageError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
+                    }
                 }
                 
             }

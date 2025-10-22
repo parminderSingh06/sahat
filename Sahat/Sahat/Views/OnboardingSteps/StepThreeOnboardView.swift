@@ -3,6 +3,8 @@ import SwiftUI
 struct StepThreeOnboardView: View {
     @Binding var activityLevel: ActivityLevel?
     @Binding var goal: Goal?
+    @Binding var activityLevelError: String?
+    @Binding var goalError: String?
     
     var body: some View {
         VStack {
@@ -19,6 +21,11 @@ struct StepThreeOnboardView: View {
                             Text(level.description).tag(level)
                         }
                     }
+                    
+                    if let error = activityLevelError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
+                    }
                 }
                 
                 VStack{
@@ -27,6 +34,11 @@ struct StepThreeOnboardView: View {
                         ForEach(Goal.allCases){ goal in
                             Text(goal.rawValue).tag(goal)
                         }
+                    }
+                    
+                    if let error = goalError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
                     }
                 }
                 

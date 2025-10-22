@@ -3,6 +3,8 @@ import SwiftUI
 struct StepTwoOnboardView: View {
     @Binding var gender: Gender?
     @Binding var weight: Double
+    @Binding var genderError: String?
+    @Binding var weightError: String?
     
     var body: some View {
         VStack {
@@ -20,6 +22,11 @@ struct StepTwoOnboardView: View {
                     }
                     .pickerStyle(.segmented)
                     .padding(10)
+                    
+                    if let error = genderError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
+                    }
                 }
                 
                 VStack{
@@ -31,6 +38,11 @@ struct StepTwoOnboardView: View {
                             .multilineTextAlignment(.center)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
+                    }
+                    
+                    if let error = weightError{
+                        Text("\(error)")
+                            .foregroundStyle(.red)
                     }
                 }
                 
