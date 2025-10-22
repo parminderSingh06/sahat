@@ -7,6 +7,7 @@ class DatabaseManager{
     
     private init(){
         openDatabase()
+        createUserTable()
     }
     
     private func openDatabase(){
@@ -18,5 +19,25 @@ class DatabaseManager{
             print("Error db cannot be opened")
         }
     }
-
+    
+    private func createUserTable(){
+        let query = """
+            CREATE TABLE IF NOT EXISTS User (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                age INTEGER,
+                gender TEXT,
+                weight REAL,
+                activityLevel TEXT,
+                goal TEXT
+            );
+            """
+        if sqlite3_exec(db, query, nil, nil, nil) != SQLITE_OK {
+            print("Failed to create table: \(String(cString: sqlite3_errmsg(db)))")
+        }
+    }
+    
+    func getDatabase() -> OpaquePointer? {
+        return db
+    }
 }
