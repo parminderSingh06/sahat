@@ -6,8 +6,17 @@ class DatabaseManager{
     private var db: OpaquePointer?
     
     private init(){
+        do{
+            try openDatabase()
+        } catch {
+            print(error.localizedDescription)
+        }
         
-        createUserTable()
+        do{
+            try createUserTable()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     private func findDatabase() throws -> String{
@@ -30,7 +39,7 @@ class DatabaseManager{
         }
     }
     
-    private func createUserTable(){
+    private func createUserTable() throws{
         let query = """
             CREATE TABLE IF NOT EXISTS User (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,11 +52,19 @@ class DatabaseManager{
             );
             """
         if sqlite3_exec(db, query, nil, nil, nil) != SQLITE_OK {
-            print("Failed to create table: \(String(cString: sqlite3_errmsg(db)))")
+            let errorMessage: String
+            if let cString = sqlite3_errmsg(db) {
+                errorMessage = String(cString: cString)
+            } else {
+                errorMessage = "Unknown error"
+            }
+            throw DatabaseError.failedToCreateTable(message: errorMessage)
         }
     }
     
     func getDatabase() -> OpaquePointer? {
         return db
     }
+    
 }
+
