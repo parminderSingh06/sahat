@@ -30,3 +30,8 @@ enum Goal: String, CaseIterable, Identifiable {
     case gainWeight = "Gain Weight"
     case notSure = "Not Sure"
 }
+
+enum DatabaseError: Error {
+    case failedToLocateDatabase(message: String)
+    case failedToCreateTable(message: String)
+}

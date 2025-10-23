@@ -10,12 +10,19 @@ class DatabaseManager{
         createUserTable()
     }
     
-    private func openDatabase(){
-        let fileUrl = try! FileManager.default
-            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Sahat.sqlite")
+    private func findDatabase() throws -> String{
+        do {
+            let fileUrl = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Sahat.sqlite")
+            return fileUrl.path()
+        } catch{
+            throw DatabaseError.failedToLocateDatabase(message: error.localizedDescription)
+        }
         
-        if sqlite3_open(fileUrl.path, &db) != SQLITE_OK{
+    }
+    
+    private func openDatabase(){
+        
+        if sqlite3_open(fileUrl.path(), &db) != SQLITE_OK{
             print("Error db cannot be opened")
         }
         
