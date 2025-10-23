@@ -9,3 +9,10 @@ struct UserError{
     var goalError: String?
     var activityLevelError: String?
 }
+
+enum DatabaseError: Error {
+    case failedToLocateDatabase(message: String)
+    case failedToOpenDatabase(message: String)
+    case failedToCreateTable(message: String)
+}
+

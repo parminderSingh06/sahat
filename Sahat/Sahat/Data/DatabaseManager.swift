@@ -6,7 +6,7 @@ class DatabaseManager{
     private var db: OpaquePointer?
     
     private init(){
-        openDatabase()
+        
         createUserTable()
     }
     
@@ -20,13 +20,14 @@ class DatabaseManager{
         
     }
     
-    private func openDatabase(){
-        
-        if sqlite3_open(fileUrl.path(), &db) != SQLITE_OK{
-            print("Error db cannot be opened")
+    private func openDatabase() throws{
+        do{
+            let databaseUrl = try findDatabase()
+            sqlite3_open(databaseUrl, &db)
+            print("Database is at: \(databaseUrl)")
+        } catch {
+            throw DatabaseError.failedToOpenDatabase(message: error.localizedDescription)
         }
-        
-        print("Database is at: \(fileUrl.path())")
     }
     
     private func createUserTable(){
