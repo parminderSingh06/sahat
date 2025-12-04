@@ -9,13 +9,13 @@ class DatabaseManager{
         do{
             try openDatabase()
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
         
         do{
             try createUserTable()
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
     
@@ -34,14 +34,11 @@ class DatabaseManager{
         do{
             let databaseUrl = try findDatabase()
             if sqlite3_open(databaseUrl, &db) != SQLITE_OK {
-                let errorMessage : String
-                if let cString = sqlite3_errmsg(db){
-                    errorMessage = String(cString: cString)
-                } else {
-                    errorMessage = "Unknown error occured when trying to open database."
-                }
+                let errorMessage = String(cString: sqlite3_errmsg(db))
                 throw DatabaseError.failedToOpenDatabase(message: errorMessage)
             }
+        } catch let error as DatabaseError{
+            throw error
         } catch {
             throw DatabaseError.failedToOpenDatabase(message: error.localizedDescription)
         }
