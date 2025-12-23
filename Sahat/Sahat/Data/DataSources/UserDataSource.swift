@@ -4,6 +4,7 @@ import SQLite3
 protocol UserDAO {
     func insertUser(_ user: User)
     func getUser() -> User?
+    func userExists() -> Bool
 }
 
 class SQLiteUserDataSource: UserDAO{
@@ -52,5 +53,22 @@ class SQLiteUserDataSource: UserDAO{
     func getUser() -> User? {
         //To Do
         return nil
+    }
+    
+    func userExists() -> Bool {
+        let query = "SELECT 1 FROM User LIMIT 1"
+        var stmt: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK{
+            
+            if sqlite3_step(stmt) == SQLITE_ROW {
+                sqlite3_finalize(stmt)
+                return true;
+            }
+            
+        }
+        
+        sqlite3_finalize(stmt)
+        return false;
     }
 }

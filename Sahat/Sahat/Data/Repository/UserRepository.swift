@@ -15,4 +15,8 @@ class UserRepository{
     func getUser() -> User? {
         return dataSource.getUser()
     }
+    
+    func userExists() -> Bool {
+        return dataSource.userExists();
+    }
 }
