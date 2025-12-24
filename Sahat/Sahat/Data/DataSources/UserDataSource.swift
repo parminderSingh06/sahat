@@ -51,8 +51,72 @@ class SQLiteUserDataSource: UserDAO{
     }
     
     func getUser() -> User? {
-        //To Do
+        if userExists() {
+            let query = """
+                SELECT * FROM User
+                WHERE id = 1
+                """
+            var stmt: OpaquePointer?
+            
+            if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
+                var userRowData = sqlite3_step(stmt)
+                if(userRowData == SQLITE_ROW){
+                    var user = User()
+                    user.name = String(cString:sqlite3_column_text(stmt, 1))
+                    user.age = Int(sqlite3_column_int(stmt, 2))
+                    user.gender = genderParser(String(cString:sqlite3_column_text(stmt, 3)))
+                    user.weight = sqlite3_column_double(stmt, 4)
+                    user.activityLevel = activityLevelParser(Int(sqlite3_column_int(stmt, 5)))
+                    user.goal = goalParser(String(cString: sqlite3_column_text(stmt, 6)))
+                    
+                    sqlite3_finalize(stmt)
+                    
+                    return user;
+                }
+            }
+        }
         return nil
+    }
+    
+    private func genderParser(_ genderString: String) -> Gender?{
+        if(genderString.prefix(1) == "m"){
+            return Gender.male
+        }else{
+            return Gender.female
+        }
+    }
+    
+    private func activityLevelParser(_ level: Int) -> ActivityLevel?{
+        switch level {
+        case 0:
+            return ActivityLevel.sedentary
+        case 1:
+            return ActivityLevel.lightlyActive
+        case 2:
+            return ActivityLevel.moderatelyActive
+        case 3:
+            return ActivityLevel.veryActive
+        case 4:
+            return ActivityLevel.extraActive
+        default:
+            return nil
+        }
+        
+    }
+    
+    private func goalParser(_ goal: String) -> Goal?{
+        switch goal{
+        case "Lose Weight":
+            return Goal.loseWeight
+        case "Maintain Weight":
+            return Goal.maintainWeight
+        case "Gain Weight":
+            return Goal.gainWeight
+        case "Not Sure":
+            return Goal.notSure
+        default:
+            return nil
+        }
     }
     
     func userExists() -> Bool {
