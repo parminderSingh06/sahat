@@ -51,34 +51,53 @@ class SQLiteUserDataSource: UserDAO{
     }
     
     func getUser() -> User? {
-        if userExists() {
-            let query = """
-                SELECT * FROM User
-                WHERE id = 1
-                """
-            var stmt: OpaquePointer?
+        let query = """
+            SELECT * FROM User
+            WHERE id = 1
+        """
+        var stmt: OpaquePointer?
             
-            if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
-                var userRowData = sqlite3_step(stmt)
-                if(userRowData == SQLITE_ROW){
-                    var user = User()
-                    user.name = String(cString:sqlite3_column_text(stmt, 1))
-                    user.age = Int(sqlite3_column_int(stmt, 2))
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
+            var userRowData = sqlite3_step(stmt)
+            if(userRowData == SQLITE_ROW){
+                var user = User()
+                
+                user.name = String(cString:sqlite3_column_text(stmt, 1))
+                
+                user.age = Int(sqlite3_column_int(stmt, 2))
+                
+                if sqlite3_column_type(stmt, 5) != SQLITE_NULL {
                     user.gender = genderParser(String(cString:sqlite3_column_text(stmt, 3)))
-                    user.weight = sqlite3_column_double(stmt, 4)
-                    user.activityLevel = activityLevelParser(Int(sqlite3_column_int(stmt, 5)))
-                    user.goal = goalParser(String(cString: sqlite3_column_text(stmt, 6)))
-                    
-                    sqlite3_finalize(stmt)
-                    
-                    return user;
                 }
+                else {
+                    user.gender = nil
+                }
+                
+                user.weight = sqlite3_column_double(stmt, 4)
+                
+                if sqlite3_column_type(stmt, 5) != SQLITE_NULL {
+                    user.activityLevel = activityLevelParser(Int(sqlite3_column_int(stmt, 5)))
+                }
+                else {
+                    user.activityLevel = nil
+                }
+                
+                if sqlite3_column_type(stmt, 5) != SQLITE_NULL {
+                    user.goal = goalParser(String(cString: sqlite3_column_text(stmt, 6)))
+                }
+                else{
+                    user.goal = nil
+                }
+                    
+                sqlite3_finalize(stmt)
+                    
+                return user;
             }
         }
         return nil
     }
     
-    private func genderParser(_ genderString: String) -> Gender?{
+    private func genderParser(_ genderString: String) -> Gender{
         if(genderString.prefix(1) == "m"){
             return Gender.male
         }else{
