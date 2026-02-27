@@ -58,7 +58,7 @@ class SQLiteUserDataSource: UserDAO{
         var stmt: OpaquePointer?
             
         if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
-            var userRowData = sqlite3_step(stmt)
+            let userRowData = sqlite3_step(stmt)
             if(userRowData == SQLITE_ROW){
                 var user = User()
                 
