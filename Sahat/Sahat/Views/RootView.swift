@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct RootView : View {
-    @StateObject var viewModel = RootViewModel()
+    @EnvironmentObject var viewModel : RootViewModel
     var body: some View {
-        
+        if viewModel.user == nil {
+            OnboardingContainerView()
+        }
+        else {
+            
+        }
     }
 }
