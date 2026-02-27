@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StepTwoOnboardView: View {
-    @Binding var gender: Gender?
+    @Binding var gender: Gender
     @Binding var weight: Double
     @Binding var genderError: String?
     @Binding var weightError: String?
@@ -17,10 +17,11 @@ struct StepTwoOnboardView: View {
                 VStack{
                     Text("Select Gender")
                     Picker("Gender", selection: $gender){
+                        Text("Select Gender:").tag(Gender.unspecified)
                         Text("Male").tag(Gender.male)
                         Text("Female").tag(Gender.female)
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(.menu)
                     .padding(10)
                     
                     if let error = genderError{

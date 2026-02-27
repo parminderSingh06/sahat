@@ -20,11 +20,7 @@ class SQLiteUserDataSource: UserDAO{
             
             sqlite3_bind_int(stmt, 2, Int32(user.age))
             
-            if let gender = user.gender?.rawValue {
-                sqlite3_bind_text(stmt, 3, (gender as NSString).utf8String, -1, nil)
-            } else {
-                sqlite3_bind_null(stmt, 3)
-            }
+            sqlite3_bind_text(stmt, 3, (user.gender.rawValue as NSString).utf8String, -1, nil)
             
             sqlite3_bind_double(stmt, 4, user.weight)
             
@@ -70,7 +66,7 @@ class SQLiteUserDataSource: UserDAO{
                     user.gender = genderParser(String(cString:sqlite3_column_text(stmt, 3)))
                 }
                 else {
-                    user.gender = nil
+                    user.gender = Gender.unspecified
                 }
                 
                 user.weight = sqlite3_column_double(stmt, 4)

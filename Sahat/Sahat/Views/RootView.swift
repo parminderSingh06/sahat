@@ -7,7 +7,9 @@ struct RootView : View {
             OnboardingContainerView()
         }
         else {
-            
+            MainTabView()
         }
+        
     }
+    
 }

@@ -11,13 +11,14 @@ final class OnboardingViewModel: ObservableObject {
     private let maxStep = 3
     
     func nextStep() {
-        if(step == 3){
+        guard validateCurrentStep() else { return }
+        
+        if(step == maxStep){
             userRepository.insert(user: user)
+            return
         }
         
-        guard validateCurrentStep() else { return }
         step = min(step + 1, maxStep)
-        
         
     }
     
@@ -43,7 +44,7 @@ final class OnboardingViewModel: ObservableObject {
             }
             
         case 2:
-            if user.gender == nil {
+            if user.gender == Gender.unspecified {
                 userErrors.genderError = "Please select a gender"
                 isValid = false
             } else if user.weight < 70 || user.weight > 400 {

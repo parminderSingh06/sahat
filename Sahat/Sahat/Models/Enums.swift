@@ -1,4 +1,5 @@
 enum Gender: String{
+    case unspecified
     case male
     case female
 }

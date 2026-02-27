@@ -9,4 +9,9 @@ final class RootViewModel : ObservableObject {
     init() {
         self.user = userRepository.getUser()
     }
+    
+    func reloadUser(){
+        user = userRepository.getUser()
+    }
+    
 }
