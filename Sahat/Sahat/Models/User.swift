@@ -6,6 +6,6 @@ struct User: Identifiable {
     var age: Int = 18
     var weight: Double = 0.0
     var gender: Gender = Gender.unspecified
-    var activityLevel: ActivityLevel?
-    var goal: Goal?
+    var activityLevel: ActivityLevel = ActivityLevel.unspecified
+    var goal: Goal = Goal.unspecified
 }

@@ -24,17 +24,9 @@ class SQLiteUserDataSource: UserDAO{
             
             sqlite3_bind_double(stmt, 4, user.weight)
             
-            if let activityLvl = user.activityLevel?.rawValue {
-                sqlite3_bind_int(stmt, 5, Int32(activityLvl))
-            } else {
-                sqlite3_bind_null(stmt, 5)
-            }
+            sqlite3_bind_int(stmt, 5, Int32(user.activityLevel.rawValue))
             
-            if let goal2 = user.goal?.rawValue {
-                sqlite3_bind_text(stmt, 6, (goal2 as NSString).utf8String, -1, nil)
-            } else {
-                sqlite3_bind_null(stmt, 6)
-            }
+            sqlite3_bind_text(stmt, 6, (user.goal.rawValue as NSString).utf8String, -1, nil)
             
             if sqlite3_step(stmt) == SQLITE_DONE {
                 print("User saved successfully")
@@ -75,14 +67,14 @@ class SQLiteUserDataSource: UserDAO{
                     user.activityLevel = activityLevelParser(Int(sqlite3_column_int(stmt, 5)))
                 }
                 else {
-                    user.activityLevel = nil
+                    user.activityLevel = ActivityLevel.unspecified
                 }
                 
                 if sqlite3_column_type(stmt, 5) != SQLITE_NULL {
                     user.goal = goalParser(String(cString: sqlite3_column_text(stmt, 6)))
                 }
                 else{
-                    user.goal = nil
+                    user.goal = Goal.unspecified
                 }
                     
                 sqlite3_finalize(stmt)
@@ -101,7 +93,7 @@ class SQLiteUserDataSource: UserDAO{
         }
     }
     
-    private func activityLevelParser(_ level: Int) -> ActivityLevel?{
+    private func activityLevelParser(_ level: Int) -> ActivityLevel{
         switch level {
         case 0:
             return ActivityLevel.sedentary
@@ -114,12 +106,12 @@ class SQLiteUserDataSource: UserDAO{
         case 4:
             return ActivityLevel.extraActive
         default:
-            return nil
+            return ActivityLevel.unspecified
         }
         
     }
     
-    private func goalParser(_ goal: String) -> Goal?{
+    private func goalParser(_ goal: String) -> Goal{
         switch goal{
         case "Lose Weight":
             return Goal.loseWeight
@@ -130,7 +122,7 @@ class SQLiteUserDataSource: UserDAO{
         case "Not Sure":
             return Goal.notSure
         default:
-            return nil
+            return Goal.unspecified
         }
     }
     

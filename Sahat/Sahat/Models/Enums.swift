@@ -5,6 +5,7 @@ enum Gender: String{
 }
 
 enum ActivityLevel: Int, CaseIterable, Identifiable{
+    case unspecified = -1
     case sedentary = 0
     case lightlyActive = 1
     case moderatelyActive = 2
@@ -14,6 +15,7 @@ enum ActivityLevel: Int, CaseIterable, Identifiable{
     var id: Int { self.rawValue }
     var description: String {
         switch self {
+        case .unspecified: return "Unknown user has not provided"
         case .sedentary: return "Sedentary (little or no exercise)"
         case .lightlyActive: return "Lightly Active (1–3 days/week)"
         case .moderatelyActive: return "Moderately Active (3–5 days/week)"
@@ -26,6 +28,7 @@ enum ActivityLevel: Int, CaseIterable, Identifiable{
 
 enum Goal: String, CaseIterable, Identifiable {
     var id: String {rawValue}
+    case unspecified = "Unknown"
     case loseWeight = "Lose Weight"
     case maintainWeight = "Maintain Weight"
     case gainWeight = "Gain Weight"
