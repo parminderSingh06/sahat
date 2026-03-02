@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OnboardingContainerView: View {
     @StateObject var viewModel = OnboardingViewModel()
+    @EnvironmentObject var rootViewModel: RootViewModel
     var body: some View {
         VStack {
             if viewModel.step != 0{
@@ -46,7 +47,15 @@ struct OnboardingContainerView: View {
             Spacer(minLength: 400)
             
             Button(action: {
+                let isLastStep = (viewModel.step == 3)
+                
                 viewModel.nextStep()
+                
+                if(isLastStep){
+                    print("last step acknowledged.")
+                    rootViewModel.reloadUser()
+                    
+                }
             }){
                 Text("Continue")
                     .font(Font.title2)

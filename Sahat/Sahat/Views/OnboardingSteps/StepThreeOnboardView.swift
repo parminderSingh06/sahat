@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct StepThreeOnboardView: View {
-    @Binding var activityLevel: ActivityLevel?
-    @Binding var goal: Goal?
+    @Binding var activityLevel: ActivityLevel
+    @Binding var goal: Goal
     @Binding var activityLevelError: String?
     @Binding var goalError: String?
     

@@ -41,7 +41,7 @@ class SQLiteUserDataSource: UserDAO{
     func getUser() -> User? {
         let query = """
             SELECT * FROM User
-            WHERE id = 1
+            LIMIT 1
         """
         var stmt: OpaquePointer?
             
@@ -78,7 +78,7 @@ class SQLiteUserDataSource: UserDAO{
                 }
                     
                 sqlite3_finalize(stmt)
-                    
+                print("User retrived succesfully.")
                 return user;
             }
         }

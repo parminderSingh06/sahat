@@ -53,10 +53,10 @@ final class OnboardingViewModel: ObservableObject {
             }
             
         case 3:
-            if user.activityLevel == nil {
+            if user.activityLevel == ActivityLevel.unspecified {
                 userErrors.activityLevelError = "Please select an activity level"
                 isValid = false
-            } else if user.goal == nil {
+            } else if user.goal == Goal.unspecified {
                 userErrors.goalError = "Please select a goal"
                 isValid = false
             }

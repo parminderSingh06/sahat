@@ -47,7 +47,6 @@ class DatabaseManager{
     private func createUserTable() throws{
         let query = """
             CREATE TABLE IF NOT EXISTS User (
-                id INTEGER PRIMARY KEY,
                 name TEXT,
                 age INTEGER,
                 gender TEXT,
