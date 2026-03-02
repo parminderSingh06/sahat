@@ -52,7 +52,6 @@ struct OnboardingContainerView: View {
                 viewModel.nextStep()
                 
                 if(isLastStep){
-                    print("last step acknowledged.")
                     rootViewModel.reloadUser()
                     
                 }
